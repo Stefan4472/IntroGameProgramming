@@ -6,18 +6,15 @@ import java.io.IOException;
 
 public class PlayerSprite extends Sprite {
 
-    // current animation being played
-    private Spritesheet currAnim;
-
     public PlayerSprite(float x, float y) {
         super(x, y, new Hitbox(x, y, 64, 64));
 
         try {
             // load images and create spritesheets
-            moveLeftAnim = new Spritesheet(ImageIO.read(new File("graphics/npc-left.png")), 4, 66);
-            moveRightAnim = new Spritesheet(ImageIO.read(new File("graphics/npc-right.png")), 4, 66);
-            moveUpAnim = new Spritesheet(ImageIO.read(new File("graphics/npc-up.png")), 4, 66);
-            moveDownAnim = new Spritesheet(ImageIO.read(new File("graphics/npc-down.png")), 4, 66);
+            moveLeftAnim = new Spritesheet(ImageIO.read(new File("graphics/npc-left.png")), 4, 100);
+            moveRightAnim = new Spritesheet(ImageIO.read(new File("graphics/npc-right.png")), 4, 100);
+            moveUpAnim = new Spritesheet(ImageIO.read(new File("graphics/npc-up.png")), 4, 100);
+            moveDownAnim = new Spritesheet(ImageIO.read(new File("graphics/npc-down.png")), 4, 100);
 
             // set direction to down
             currDir = Direction.DOWN;
@@ -35,15 +32,19 @@ public class PlayerSprite extends Sprite {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {  // handle right arrow key
             currDir = Direction.RIGHT;
             speedX = 5.0f;  // move to the right
+            currAnim = moveRightAnim;
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {  // handle left arrow key
             currDir = Direction.LEFT;
             speedX = -5.0f;  // move to the left
+            currAnim = moveLeftAnim;
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {  // handle up arrow key
             currDir = Direction.UP;
             speedY = -5.0f;  // move up (y decreases!)
+            currAnim = moveUpAnim;
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {  // handle down arrow key
             currDir = Direction.DOWN;
             speedY = 5.0f;  // move down (y increases!)
+            currAnim = moveDownAnim;
         }
     }
 
@@ -58,10 +59,15 @@ public class PlayerSprite extends Sprite {
 
     @Override
     void update(int ms) {
+        // update animation
+        currAnim.update(ms);
+
+        // update coordinates
         x += speedX;
         y += speedY;
 
-        currAnim.update(ms);
+        // update hitbox coordinates
+        hitbox.offset(speedX, speedY);
     }
 
     @Override
@@ -75,6 +81,7 @@ public class PlayerSprite extends Sprite {
 
     @Override
     void handleCollision(Sprite s) {
-
+        speedX = 0;
+        speedY = 0;
     }
 }

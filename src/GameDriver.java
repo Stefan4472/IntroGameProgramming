@@ -38,6 +38,8 @@ public class GameDriver extends JFrame implements KeyListener {
         // init sprite list and add playerSprite
         sprites = new LinkedList<>();
         sprites.add(playerSprite);
+        sprites.add(new PlayerSprite(50, 50));
+        sprites.add(new PlayerSprite(250, 200));
 
         // init lastUpdate
         lastUpdate = System.currentTimeMillis();
@@ -84,6 +86,7 @@ public class GameDriver extends JFrame implements KeyListener {
                     // handle collision both ways
                     sprites.get(i).handleCollision(sprites.get(j));
                     sprites.get(j).handleCollision(sprites.get(i));
+                    System.out.println("Sprite " + i + " colliding with Sprite " + j);
                 }
             }
         }

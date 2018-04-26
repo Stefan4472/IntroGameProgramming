@@ -16,8 +16,9 @@ public class Background {
     }
 
     // draws background to the given Graphics2D object
+    // this can be improved to show an image background, or a scrolling background
     public void drawToCanvas(Graphics2D g) {
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.GREEN);
         g.fillRect(0, 0, width, height);
     }
 }

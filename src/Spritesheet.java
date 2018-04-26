@@ -10,6 +10,7 @@ public class Spritesheet {
     private int msThisFrame; // number of ms this frame has been shown
     private int numFrames;          // number of frames in the sequence
     private BufferedImage img;      // the image itself
+    private boolean paused = false; // whether animation is paused
 
     // initialize with image and the number of frames it contains
     public Spritesheet(BufferedImage img, int numFrames, int msPerFrame) {
@@ -30,6 +31,20 @@ public class Spritesheet {
             counter = (counter + 1) % numFrames;
             msThisFrame = msPerFrame - (msThisFrame - msPerFrame);
         }
+    }
+
+    public void pause() {
+        paused = true;
+    }
+
+    public void play() {
+        paused = false;
+    }
+
+    // sets frame count to zero
+    public void reset() {
+        counter = 0;
+        msThisFrame = 0;
     }
 
     // returns current frame of animation

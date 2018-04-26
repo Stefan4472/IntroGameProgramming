@@ -15,6 +15,9 @@ public abstract class Sprite {
     // spritesheet animations for movement in given directions
     protected Spritesheet moveLeftAnim, moveRightAnim, moveUpAnim, moveDownAnim;
 
+    // current animation being played
+    protected Spritesheet currAnim;
+
     // constants describing which directions a sprite can move in
     public enum Direction {
         UP, DOWN, LEFT, RIGHT, NONE;
